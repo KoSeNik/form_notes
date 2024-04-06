@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const chalk = require("chalk");
 const path = require("path");
@@ -112,12 +114,8 @@ app.get("/notes", async (req, res) => {
   }
 });
 
-mongoose
-  .connect(
-    "mongodb+srv://sergkomarov:%21Q%40W3e4r@cluster0.3q3qbom.mongodb.net/notes?retryWrites=true&w=majority&appName=Cluster0"
-  )
-  .then(() => {
-    app.listen(port, () => {
-      console.log(chalk.green(`Server has been started on port ${port}...`));
-    });
+mongoose.connect(process.env.DB_CONNECTION_STRING).then(() => {
+  app.listen(port, () => {
+    console.log(chalk.green(`Server has been started on port ${port}...`));
   });
+});
